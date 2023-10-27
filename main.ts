@@ -1,25 +1,32 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Decoration } from '@codemirror/view'
 
-// Remember to rename these classes and interfaces!
+// TODO: Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
+// Settings 
+// TODO: Add Settings
+interface ObsidianToAnkiClozureConcealSettings {
 	mySetting: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: ObsidianToAnkiClozureConcealSettings = {
 	mySetting: 'default'
 }
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+// TODO: Add Resources
+export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
+	settings: ObsidianToAnkiClozureConcealSettings;
 
+	// Configures resources need by the plugin
 	async onload() {
 		await this.loadSettings();
 
+		console.log('Loading Obsidian To Anki Clozure Conceal Plugin')
+
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
+		const ribbonIconEl = this.addRibbonIcon('dice', 'Greet', () => {
 			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+			new Notice('Obsidian To Anki Clozure Conceal!');
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
@@ -78,7 +85,9 @@ export default class MyPlugin extends Plugin {
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
+	// Releases any resources configured by the plugin
 	onunload() {
+		console.log('Unloading Obsidian To Anki Clozure Conceal Plugin')
 
 	}
 
@@ -108,9 +117,9 @@ class SampleModal extends Modal {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: ObsidianToAnkiClozureConcealPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: ObsidianToAnkiClozureConcealPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
