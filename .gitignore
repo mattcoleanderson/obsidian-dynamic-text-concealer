@@ -20,3 +20,10 @@ data.json
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
+
+# Ignore .obsidian
+test-vault/.obsidian/*
+
+# Don't track this folder. This will be for testing random things in the test-vault
+test-vault/untracked/*
+!test-vault/untracked/README.md
