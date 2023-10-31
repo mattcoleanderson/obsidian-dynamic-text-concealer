@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
 	"inlineSourceMap": true,
-    "module": "NodeNext",
+    "module": "CommonJS",
     "target": "ES6",
     "allowJs": true,
     "noImplicitAny": true,

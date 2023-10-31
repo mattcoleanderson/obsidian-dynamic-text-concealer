@@ -1,5 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import { Decoration } from '@codemirror/view'
+import { Decoration } from '@codemirror/view';
 
 // TODO: Remember to rename these classes and interfaces!
 
