@@ -1,7 +1,10 @@
 const ELEMENTS_TO_PROCESS = 'p, li';
+// The 'answer' capture group contains the content to keep
+const REGEX_CURLY_MATCH =  /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/gm
+const REGEX_CURLY_REPLACEMENT = '$<answer>'
 
-const conceal = (node: Text) => {
-	node.textContent = (node.textContent || '').replace(/{/, '')
+const conceal = (node: Text, regex: RegExp, replacement: string) => {
+	node.textContent = (node.textContent || '').replace(regex, replacement)
 }
 
 // markdownPostProcessor manipulates the DOM of
@@ -11,20 +14,14 @@ export function markdownPostProcessor(htmlElement: HTMLElement) {
 	
 	// Loop through each element
 	elements.forEach((element: HTMLParagraphElement | HTMLLIElement) => {
-		// if (!element.innerText.includes('{') || !element.innerText.includes('==')) return
-		if (!element.innerText.match(/{|==/)) return
-
-		// From here forward we are working with an element that contains a clozure
-		// Loop through each child node
+		// TODO: Test the REGEX_CURLY_MATCH for post processing here:
 		for (const node of Array.from(element.childNodes)) {
-			// Handle different types of Elements that may be children
-
-			// Text
+			// We grab the node so as to not destroy child elements when replacing innerText
 			if (node.instanceOf(Text)) {
 				const content = (node.textContent || '').trim()
-				if (!content) continue // continue if content is empty
+				if (!content) continue
 
-				conceal(node)
+				conceal(node, REGEX_CURLY_MATCH, REGEX_CURLY_REPLACEMENT)
 			}
 		}
 	})
