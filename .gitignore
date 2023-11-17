@@ -21,8 +21,14 @@ data.json
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
 
-# Ignore .obsidian
+# Ignore test-valut/.obsidian folder contents
 test-vault/.obsidian/*
+!test-vault/.obsidian/community-plugins.json
+!test-vault/.obsidian/plugins/
+
+# Reinclude hot-relodd submodule
+test-vault/.obsidian/plugins/*
+!test-vault/.obsidian/plugins/hot-reload/
 
 # Don't track this folder. This will be for testing random things in the test-vault
 test-vault/untracked/*
