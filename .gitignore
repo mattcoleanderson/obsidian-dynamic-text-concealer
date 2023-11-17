@@ -21,9 +21,30 @@ data.json
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
 
-# Ignore .obsidian
-test-vault/.obsidian/*
+# ==================================================================================================
+# ===                                  Obsidian Test Vault                                       === 
+# ==================================================================================================
 
-# Don't track this folder. This will be for testing random things in the test-vault
+# Exclude Dir: -------------------------------------------------------------------------------------
+test-vault/.obsidian/*
+# Include various files/subdirs in above dir: --------------------------------------------
+!test-vault/.obsidian/community-plugins.json
+!test-vault/.obsidian/plugins/
+
+# Exclude Dir: -------------------------------------------------------------------------------------
+test-vault/.obsidian/plugins/*
+# Include various files/subdirs in above dir: --------------------------------------------
+!test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/
+!test-vault/.obsidian/plugins/hot-reload/
+
+# Exclude Dir: -------------------------------------------------------------------------------------
+test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/*
+# Include various files/subdirs in above dir: --------------------------------------------
+# This empty file tells the hot-reload plugin to reload this plugin
+!test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/.hotreload
+
+# Exclude Dir: -------------------------------------------------------------------------------------
+# This will be for testing random things in the test-vault
 test-vault/untracked/*
+# Include various files/subdirs in above dir: --------------------------------------------
 !test-vault/untracked/README.md
