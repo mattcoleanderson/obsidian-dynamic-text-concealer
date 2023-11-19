@@ -9,7 +9,7 @@ const BUILD_DIR = 'build';
 
 const BASE_CONFIG = {
 	input: 'src/main.ts',
-	external: ['obsidian', 'path']
+	external: ['obsidian', '@codemirror/view', '@codemirror/state']
 };
 
 const getRollupPlugins = (...plugins) => [
