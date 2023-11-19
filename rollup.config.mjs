@@ -4,7 +4,7 @@ import typescript from '@rollup/plugin-typescript';
 import copy from 'rollup-plugin-copy';
 
 const PROJECT_NAME = 'obsidian-to-anki-clozure-conceal';
-const TEST_VAULT_PLUGIN_DIR = `test-vault/.obsidian/plugins/${ PROJECT_NAME }`;
+const TEST_VAULT_PLUGIN_DIR = `test-vault/.obsidian/plugins/${PROJECT_NAME}`;
 const BUILD_DIR = 'build';
 
 const BASE_CONFIG = {
@@ -13,7 +13,7 @@ const BASE_CONFIG = {
 };
 
 const getRollupPlugins = (...plugins) => [
-	typescript({ compilerOptions: { module: "ESNext" }} ), // Rollup requires ES Modules
+	typescript({ compilerOptions: { module: "ESNext" } }), // Rollup requires ES Modules
 	nodeResolve({ browser: true }),
 	commonjs()
 ].concat(plugins);
@@ -29,8 +29,8 @@ const DEV_PLUGIN_CONFIG = {
 	plugins: getRollupPlugins(
 		copy({
 			targets: [
-				{ src: 'manifest.json', dest: `${ TEST_VAULT_PLUGIN_DIR }/` },
-				{ src: 'styles.css', dest: `${ TEST_VAULT_PLUGIN_DIR }/` }
+				{ src: 'manifest.json', dest: `${TEST_VAULT_PLUGIN_DIR}/` },
+				{ src: 'styles.css', dest: `${TEST_VAULT_PLUGIN_DIR}/` }
 			]
 		})
 	)
