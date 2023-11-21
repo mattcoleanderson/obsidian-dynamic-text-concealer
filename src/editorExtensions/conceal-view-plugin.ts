@@ -17,11 +17,23 @@ import { MatchWidget } from "./match-widget";
 // TODO: When in edit mode, the current line should show the conceal text.
 class ConcealViewPlugin implements PluginValue {
 	// TODO: Extract to the settings for the plugin for use throughout the project
-	readonly REGEX_CURLY_MATCH =  /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/g
+	readonly REGEX_CURLY_MATCH = /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/g;
 
-	decorations: DecorationSet;
+	decorations: DecorationSet; // list of current decorators in view
+	matchDecorator: MatchDecorator; // Creates and updates decorators
 
 	constructor(view: EditorView) {
+		this.matchDecorator = new MatchDecorator({
+			regexp: this.REGEX_CURLY_MATCH,
+			decoration: (match) => {
+				// `match` is the result of `regexp.exec`
+				// TODO: I would like some verbose logging here, specifically a debug log
+				return Decoration.replace({
+					widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
+				});
+			},
+		});
+
 		this.decorations = this.matchDecorator.createDeco(view); // createDeco creates the initial decoration set
 	}
 
@@ -30,18 +42,6 @@ class ConcealViewPlugin implements PluginValue {
 	}
 
 	destroy() {}
-
-	// This MatchDecorator takes the regex to match on and a decoration to add when matched
-	matchDecorator = new MatchDecorator({
-		regexp: this.REGEX_CURLY_MATCH,
-		decoration: (match) => {
-			// `match` is the result of `regexp.exec`
-			// TODO: I would like some verbose logging here, specifically a debug log
-			return Decoration.replace({
-				widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
-			});
-		},
-	});
 }
 
 const pluginSpec: PluginSpec<ConcealViewPlugin> = {
