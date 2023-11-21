@@ -2,9 +2,9 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin } from "obsidian";
 import { PluginSettings } from "./interfaces/pluginSettings";
 import { SettingsTab } from "./settingsTab";
 import { Decoration, PluginValue, ViewPlugin } from "@codemirror/view";
-import { markdownPostProcessor } from "./markdownPostProcessor";
-import { concealViewPlugin } from "./editorExtension";
 import { Extension } from "@codemirror/state";
+import { concealViewPlugin } from "./editorExtensions/conceal-view-plugin";
+import { concealPostProcessor } from "./markdownPostProcessors/conceal-post-processor";
 
 // Settings
 // TODO: Add Settings
@@ -22,7 +22,7 @@ export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
 		await this.loadSettings();
 		console.log("Loading Obsidian To Anki Clozure Conceal Plugin");
 
-		this.registerMarkdownPostProcessor(markdownPostProcessor);
+		this.registerMarkdownPostProcessor(concealPostProcessor);
 		this.registerEditorExtension([this.editorExtensions]);
 	}
 

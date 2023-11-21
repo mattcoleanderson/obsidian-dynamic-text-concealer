@@ -10,10 +10,11 @@ import {
 	ViewPlugin,
 	ViewUpdate,
 } from "@codemirror/view";
-import { MatchWidget } from "./MatchWidget";
+import { MatchWidget } from "./match-widget";
 
 // TODO: Currently the replaced decorater isn't editable. This is undesirable and needs to be fixed.
 class ConcealViewPlugin implements PluginValue {
+
 	decorations: DecorationSet;
 
 	constructor(view: EditorView) {
@@ -29,7 +30,8 @@ class ConcealViewPlugin implements PluginValue {
 	// This MatchDecorator takes the regex to match on and a decoration to add when matched
 	matchDecorator = new MatchDecorator({
 		regexp: /\(\(t(\w)+]]/g, //TODO: Replace this simple regexp with the default regex
-		decoration: (match) => { // `match` is the result of `regexp.exec`
+		decoration: (match) => {
+			// `match` is the result of `regexp.exec`
 			// TODO: I would like some verbose logging here, specifically a debug log
 			return Decoration.replace({
 				widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
@@ -48,5 +50,3 @@ export const concealViewPlugin = ViewPlugin.fromClass(
 	ConcealViewPlugin,
 	pluginSpec,
 );
-
-
