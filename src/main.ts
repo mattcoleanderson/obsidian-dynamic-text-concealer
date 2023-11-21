@@ -12,7 +12,6 @@ const DEFAULT_SETTINGS: PluginSettings = {
 	mySetting: "default",
 };
 
-// TODO: Add Resources
 export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
 	settings: PluginSettings;
 	editorExtensions: Extension = concealViewPlugin
