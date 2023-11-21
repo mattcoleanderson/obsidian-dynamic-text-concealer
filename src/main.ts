@@ -3,7 +3,7 @@ import { PluginSettings } from "./interfaces/pluginSettings";
 import { SettingsTab } from "./settingsTab";
 import { Decoration, PluginValue, ViewPlugin } from "@codemirror/view";
 import { markdownPostProcessor } from "./markdownPostProcessor";
-import { ConcealViewPlugin } from "./editorExtension";
+import { concealViewPlugin } from "./editorExtension";
 import { Extension } from "@codemirror/state";
 
 // Settings
@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: PluginSettings = {
 // TODO: Add Resources
 export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
 	settings: PluginSettings;
-	editorExtensions: Extension = ViewPlugin.fromClass(ConcealViewPlugin);
+	editorExtensions: Extension = concealViewPlugin
 
 	// Configures resources need by the plugin
 	async onload() {
@@ -23,7 +23,7 @@ export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
 		console.log("Loading Obsidian To Anki Clozure Conceal Plugin");
 
 		this.registerMarkdownPostProcessor(markdownPostProcessor);
-		this.registerEditorExtension(this.editorExtensions);
+		this.registerEditorExtension([this.editorExtensions]);
 	}
 
 	// Releases any resources configured by the plugin

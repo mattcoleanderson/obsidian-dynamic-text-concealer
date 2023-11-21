@@ -6,6 +6,8 @@ The following are different clozure syntaxes. This list was copied from https://
 
 ## Paragraph Style Tests
 
+	((test]]
+
 Test a single {cloze} note.
 
 Test  {2} cloze {notes}.
