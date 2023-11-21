@@ -7,9 +7,14 @@ const conceal = (node: Text, regex: RegExp, replacement: string) => {
 	node.textContent = (node.textContent || '').replace(regex, replacement)
 }
 
+// TODO: while it is perfectly fine to us a function defintition 
+//			 I'd prefer to creat a class implementation of the 
+//			 Fucntional Interface `MarkDownPostProcessor` and implement
+//			 this method within it. By doing so, the code will be better
+//			 self documented.
 // markdownPostProcessor manipulates the DOM of
 // read mode to conceal clozure syntax
-export function markdownPostProcessor(htmlElement: HTMLElement) {
+export function concealPostProcessor(htmlElement: HTMLElement) {
 	const elements = htmlElement.querySelectorAll(ELEMENTS_TO_PROCESS)
 	
 	// Loop through each element
