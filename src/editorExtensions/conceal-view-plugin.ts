@@ -13,7 +13,11 @@ import {
 import { MatchWidget } from "./match-widget";
 
 // TODO: Currently the replaced decorater isn't editable. This is undesirable and needs to be fixed.
+// TODO: Stop this plugin from affecting source mode
+// TODO: When in edit mode, the current line should show the conceal text.
 class ConcealViewPlugin implements PluginValue {
+	// TODO: Extract to the settings for the plugin for use throughout the project
+	readonly REGEX_CURLY_MATCH =  /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/g
 
 	decorations: DecorationSet;
 
@@ -29,7 +33,7 @@ class ConcealViewPlugin implements PluginValue {
 
 	// This MatchDecorator takes the regex to match on and a decoration to add when matched
 	matchDecorator = new MatchDecorator({
-		regexp: /\(\(t(\w)+]]/g, //TODO: Replace this simple regexp with the default regex
+		regexp: this.REGEX_CURLY_MATCH,
 		decoration: (match) => {
 			// `match` is the result of `regexp.exec`
 			// TODO: I would like some verbose logging here, specifically a debug log
