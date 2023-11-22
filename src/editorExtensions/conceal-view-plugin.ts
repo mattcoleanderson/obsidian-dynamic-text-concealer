@@ -1,5 +1,3 @@
-import { syntaxTree } from "@codemirror/language";
-import { RangeSetBuilder } from "@codemirror/state";
 import {
 	Decoration,
 	DecorationSet,
@@ -9,8 +7,9 @@ import {
 	PluginValue,
 	ViewPlugin,
 	ViewUpdate,
-} from "@codemirror/view";
-import { MatchWidget } from "./match-widget";
+} from '@codemirror/view';
+import { editorLivePreviewField } from 'obsidian';
+import { MatchWidget } from './match-widget';
 
 // TODO: Currently the replaced decorater isn't editable. This is undesirable and needs to be fixed.
 // TODO: Stop this plugin from affecting source mode
@@ -34,23 +33,26 @@ class ConcealViewPlugin implements PluginValue {
 			},
 		});
 
-		this.decorations = this.matchDecorator.createDeco(view); // createDeco creates the initial decoration set
+		// Initialize the DecoratorSet if not in source mode
+		this.decorations = this.buildDecorations(view);
 	}
 
 	update(update: ViewUpdate) {
-		this.decorations = this.matchDecorator.updateDeco(update, this.decorations); // updates the decoration set
+		this.decorations = this.matchDecorator.updateDeco(update, this.decorations);
 	}
 
 	destroy() {}
+
+	private buildDecorations(view: EditorView): DecorationSet {
+		const isLiveMode = view.state.field(editorLivePreviewField);
+		return isLiveMode ? this.matchDecorator.createDeco(view) : Decoration.none;
+	}
 }
 
 const pluginSpec: PluginSpec<ConcealViewPlugin> = {
-	decorations: (value: ConcealViewPlugin) => value.decorations,
+	decorations: (instance: ConcealViewPlugin) => instance.decorations,
 };
 
 // concealViewPlugin is the main export for this class
 // and is used to register the editorExtension in main.ts
-export const concealViewPlugin = ViewPlugin.fromClass(
-	ConcealViewPlugin,
-	pluginSpec,
-);
+export const concealViewPlugin = ViewPlugin.fromClass(ConcealViewPlugin, pluginSpec);
