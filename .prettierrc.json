@@ -2,10 +2,11 @@
 	"tabWidth": 2,
 	"semi": true,
 	"embeddedLanguageFormatting": "off",
-	"printWidth": 120,
+	"printWidth": 80,
 	"arrowParens": "always",
 	"useTabs": true,
 	"singleQuote": true,
 	"trailingComma": "all",
-	"bracketSpacing": true
+	"bracketSpacing": true,
+	"experimentalTernaries": true
 }
