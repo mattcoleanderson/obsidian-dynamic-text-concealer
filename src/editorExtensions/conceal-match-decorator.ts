@@ -12,7 +12,17 @@ export class ConcealMatchDecorator extends MatchDecorator {
 					changeTo = Math.max(to, changeTo);
 				}
 			});
+		} else if (update.selectionSet) {
+			const selection = update.state.selection.ranges;
+			let fromLineStart = update.state.doc.lineAt(selection[0].from).from;
+			let toLineEnd = update.state.doc.lineAt(
+				selection[selection.length - 1].to,
+			).to;
+
+			changeFrom = Math.min(fromLineStart, changeFrom);
+			changeTo = Math.max(toLineEnd, changeTo);
 		}
+
 		if (
 			(!update.docChanged && update.viewportChanged) ||
 			changeTo - changeFrom > 1000
@@ -20,7 +30,6 @@ export class ConcealMatchDecorator extends MatchDecorator {
 			return this.createDeco(update.view);
 		}
 		if (changeTo > -1) {
-			console.log(update);
 			return this['updateRange'](
 				update.view,
 				deco.map(update.changes),
