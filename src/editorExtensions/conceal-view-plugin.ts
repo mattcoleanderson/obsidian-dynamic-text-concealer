@@ -56,7 +56,7 @@ class ConcealViewPlugin implements PluginValue {
 
 	/**
 	 * selectionAndRangeOverlap returns true if the specified range
-	 * ovlaps with the current cursor location or selection range
+	 * overlaps with the current cursor location or selection range
 	 */
 	private selectionAndRangeOverlap(
 		selection: EditorSelection,
