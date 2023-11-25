@@ -19,20 +19,15 @@ export class ConcealMatchDecorator extends MatchDecorator {
 			({ changeFrom, changeTo } = this.updateSelection(update));
 		}
 
-		if (
-			(!update.docChanged && update.viewportChanged) ||
-			changeTo - changeFrom > 1000
-		) {
-			return this.createDeco(update.view);
-		}
-		if (changeTo > -1) {
-			// console.log(update);
+		if (changeTo > -1 && changeTo - changeFrom <= 1000) {
 			return this['updateRange'](
 				update.view,
 				deco.map(update.changes),
 				changeFrom,
 				changeTo,
 			);
+		} else if (update.viewportChanged) {
+			return this.createDeco(update.view);
 		}
 		return deco;
 	}
