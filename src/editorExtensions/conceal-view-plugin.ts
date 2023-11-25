@@ -1,4 +1,4 @@
-import { StateEffect } from '@codemirror/state';
+import { EditorSelection, StateEffect } from '@codemirror/state';
 import {
 	Decoration,
 	DecorationSet,
@@ -10,6 +10,7 @@ import {
 	ViewUpdate,
 } from '@codemirror/view';
 import { editorLivePreviewField } from 'obsidian';
+import { ConcealMatchDecorator } from './conceal-match-decorator';
 import { MatchWidget } from './match-widget';
 
 // TODO: Currently the replaced decorater isn't editable. This is undesirable and needs to be fixed.
@@ -23,14 +24,29 @@ class ConcealViewPlugin implements PluginValue {
 	matchDecorator: MatchDecorator; // Creates and updates decorators
 
 	constructor(view: EditorView) {
-		this.matchDecorator = new MatchDecorator({
+		this.matchDecorator = new ConcealMatchDecorator({
 			regexp: this.REGEX_CURLY_MATCH,
-			decoration: (match) => {
-				// `match` is the result of `regexp.exec`
-				// TODO: I would like some verbose logging here, specifically a debug log
-				return Decoration.replace({
-					widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
-				});
+			// decoration: (match): Decoration => {
+			// 	// `match` is the result of `regexp.exec`
+			// 	// TODO: I would like some verbose logging here, specifically a debug log
+			// 	return Decoration.replace({
+			// 		widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
+			// 	});
+			// },
+			decorate: (add, from, to, match, view): void => {
+				// Current location of cursor or selected range
+				const selection = view.state.selection;
+				// Replace match if not overlapping with the cursor
+				if (!this.selectionAndRangeOverlap(selection, from, to)) {
+					// Add Replace Decoration to DecorationSet. The First caputre group will replace the match
+					add(
+						from,
+						from + match[0].length,
+						Decoration.replace({
+							widget: new MatchWidget(match[1]),
+						}),
+					);
+				}
 			},
 		});
 
@@ -38,6 +54,22 @@ class ConcealViewPlugin implements PluginValue {
 		this.decorations = this.initializeDecorations(view);
 	}
 
+	/**
+	 * selectionAndRangeOverlap returns true if the specified range
+	 * ovlaps with the current cursor location or selection range
+	 */
+	private selectionAndRangeOverlap(
+		selection: EditorSelection,
+		rangeFrom: number,
+		rangeTo: number,
+	) {
+		for (const range of selection.ranges) {
+			if (range.from <= rangeTo && range.to >= rangeFrom) {
+				return true;
+			}
+		}
+		return false;
+	}
 	update(update: ViewUpdate) {
 		const isSourceMode = !update.state.field(editorLivePreviewField);
 		// TODO: Make this a state field

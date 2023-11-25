@@ -8,9 +8,9 @@ The following are different clozure syntaxes. This list was copied from https://
 
 ((test]]
 
-Test a single {cloze} note. 
+Test a single {cloze}  note. 
 
-Test  {2} cloze {notes}.
+Test {2} cloze {notes}.
 
 Test a {{single}} double cloze note.
 
