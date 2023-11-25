@@ -1,6 +1,9 @@
 import { DecorationSet, MatchDecorator, ViewUpdate } from '@codemirror/view';
 
 export class ConcealMatchDecorator extends MatchDecorator {
+	lastSelectionFrom: number;
+	lastSelectionTo: number;
+
 	updateDeco(update: ViewUpdate, deco: DecorationSet) {
 		let changeFrom = 1e9;
 		let changeTo = -1;
@@ -13,14 +16,7 @@ export class ConcealMatchDecorator extends MatchDecorator {
 				}
 			});
 		} else if (update.selectionSet) {
-			const selection = update.state.selection.ranges;
-			let fromLineStart = update.state.doc.lineAt(selection[0].from).from;
-			let toLineEnd = update.state.doc.lineAt(
-				selection[selection.length - 1].to,
-			).to;
-
-			changeFrom = Math.min(fromLineStart, changeFrom);
-			changeTo = Math.max(toLineEnd, changeTo);
+			({ changeFrom, changeTo } = this.updateSelection(update));
 		}
 
 		if (
@@ -30,6 +26,7 @@ export class ConcealMatchDecorator extends MatchDecorator {
 			return this.createDeco(update.view);
 		}
 		if (changeTo > -1) {
+			// console.log(update);
 			return this['updateRange'](
 				update.view,
 				deco.map(update.changes),
@@ -38,5 +35,27 @@ export class ConcealMatchDecorator extends MatchDecorator {
 			);
 		}
 		return deco;
+	}
+
+	/*
+	 * updateSelection returns a range to update when a selection has been made
+	 * to the document, suchas a moving the cursor of selecting multiple character and line
+	 */
+	private updateSelection(update: ViewUpdate) {
+		const selection = update.state.selection.ranges;
+
+		// Get the earliest and latest positon of the lines in the selected range
+		let lineFrom = update.state.doc.lineAt(selection[0].from).from;
+		let lineTo = update.state.doc.lineAt(selection[selection.length - 1].to).to;
+
+		// Return the earliest and latest postions of the current and previous selection range
+		let changeFrom = Math.min(lineFrom, this.lastSelectionFrom);
+		let changeTo = Math.max(lineTo, this.lastSelectionTo);
+
+		// Retain the current selected range for the next update
+		this.lastSelectionFrom = lineFrom;
+		this.lastSelectionTo = lineTo;
+
+		return { changeFrom, changeTo };
 	}
 }
