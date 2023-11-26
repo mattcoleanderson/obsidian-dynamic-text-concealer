@@ -1,35 +1,43 @@
 import { DecorationSet, MatchDecorator, ViewUpdate } from '@codemirror/view';
 
 export class ConcealMatchDecorator extends MatchDecorator {
-	lastSelectionFrom: number;
-	lastSelectionTo: number;
+	private lastSelectionFrom: number;
+	private lastSelectionTo: number;
 
 	updateDeco(update: ViewUpdate, deco: DecorationSet) {
-		let changeFrom = 1e9;
-		let changeTo = -1;
+		let updateFrom;
+		let updateTo;
 
 		if (update.docChanged) {
-			update.changes.iterChanges((_f, _t, from, to) => {
-				if (to > update.view.viewport.from && from < update.view.viewport.to) {
-					changeFrom = Math.min(from, changeFrom);
-					changeTo = Math.max(to, changeTo);
-				}
-			});
+			({ updateFrom, updateTo } = this.updateChanges(update));
 		} else if (update.selectionSet) {
-			({ changeFrom, changeTo } = this.updateSelection(update));
+			({ updateFrom, updateTo } = this.updateSelection(update));
 		}
 
-		if (changeTo > -1 && changeTo - changeFrom <= 1000) {
+		if (updateTo && updateFrom && updateTo - updateFrom <= 1000) {
 			return this['updateRange'](
 				update.view,
 				deco.map(update.changes),
-				changeFrom,
-				changeTo,
+				updateFrom,
+				updateTo,
 			);
 		} else if (update.viewportChanged) {
 			return this.createDeco(update.view);
 		}
 		return deco;
+	}
+
+	private updateChanges(update: ViewUpdate) {
+		let updateFrom = 1e9;
+		let updateTo = -1;
+
+		update.changes.iterChanges((_f, _t, from, to) => {
+			if (to > update.view.viewport.from && from < update.view.viewport.to) {
+				updateFrom = update.state.doc.lineAt(Math.min(from, updateFrom)).from;
+				updateTo = update.state.doc.lineAt(Math.max(to, updateTo)).to;
+			}
+		});
+		return { updateFrom, updateTo };
 	}
 
 	/*
@@ -44,13 +52,13 @@ export class ConcealMatchDecorator extends MatchDecorator {
 		let lineTo = update.state.doc.lineAt(selection[selection.length - 1].to).to;
 
 		// Return the earliest and latest postions of the current and previous selection range
-		let changeFrom = Math.min(lineFrom, this.lastSelectionFrom);
-		let changeTo = Math.max(lineTo, this.lastSelectionTo);
+		let updateFrom = Math.min(lineFrom, this.lastSelectionFrom);
+		let updateTo = Math.max(lineTo, this.lastSelectionTo);
 
 		// Retain the current selected range for the next update
 		this.lastSelectionFrom = lineFrom;
 		this.lastSelectionTo = lineTo;
 
-		return { changeFrom, changeTo };
+		return { updateFrom, updateTo };
 	}
 }
