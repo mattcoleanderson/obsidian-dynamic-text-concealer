@@ -17,8 +17,7 @@ import { MatchWidget } from './match-widget';
 // TODO: When in edit mode, the current line should show the conceal text.
 class ConcealViewPlugin implements PluginValue {
 	// TODO: Extract to the settings for the plugin for use throughout the project
-	readonly REGEX_CURLY_MATCH =
-		/{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/g;
+	readonly REGEX_CURLY_MATCH = /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/dg;
 
 	decorations: DecorationSet; // list of current decorators in view
 	matchDecorator: MatchDecorator; // Creates and updates decorators
@@ -43,7 +42,7 @@ class ConcealViewPlugin implements PluginValue {
 						from,
 						from + match[0].length,
 						Decoration.replace({
-							widget: new MatchWidget(match[1]),
+							widget: new MatchWidget(match, view),
 						}),
 					);
 				}
@@ -58,11 +57,7 @@ class ConcealViewPlugin implements PluginValue {
 	 * selectionAndRangeOverlap returns true if the specified range
 	 * overlaps with the current cursor location or selection range
 	 */
-	private selectionAndRangeOverlap(
-		selection: EditorSelection,
-		rangeFrom: number,
-		rangeTo: number,
-	) {
+	private selectionAndRangeOverlap(selection: EditorSelection, rangeFrom: number, rangeTo: number) {
 		for (const range of selection.ranges) {
 			if (range.from <= rangeTo && range.to >= rangeFrom) {
 				return true;
@@ -70,6 +65,7 @@ class ConcealViewPlugin implements PluginValue {
 		}
 		return false;
 	}
+
 	update(update: ViewUpdate) {
 		const isSourceMode = !update.state.field(editorLivePreviewField);
 		// TODO: Make this a state field
@@ -93,9 +89,7 @@ class ConcealViewPlugin implements PluginValue {
 	 * Initializes DecorationSet. Is disabled if the editor is in source mode.
 	 */
 	private initializeDecorations(view: EditorView): DecorationSet {
-		return view.state.field(editorLivePreviewField) ?
-				this.matchDecorator.createDeco(view)
-			:	Decoration.none;
+		return view.state.field(editorLivePreviewField) ? this.matchDecorator.createDeco(view) : Decoration.none;
 	}
 }
 
@@ -105,10 +99,7 @@ const pluginSpec: PluginSpec<ConcealViewPlugin> = {
 
 // concealViewPlugin is the main export for this class
 // and is used to register the editorExtension in main.ts
-export const concealViewPlugin = ViewPlugin.fromClass(
-	ConcealViewPlugin,
-	pluginSpec,
-);
+export const concealViewPlugin = ViewPlugin.fromClass(ConcealViewPlugin, pluginSpec);
 
 /**
  * A state effect that represents the workspace's layout change.
