@@ -13,8 +13,6 @@ import { editorLivePreviewField } from 'obsidian';
 import { ConcealMatchDecorator } from './conceal-match-decorator';
 import { MatchWidget } from './match-widget';
 
-// TODO: Currently the replaced decorater isn't editable. This is undesirable and needs to be fixed.
-// TODO: When in edit mode, the current line should show the conceal text.
 class ConcealViewPlugin implements PluginValue {
 	// TODO: Extract to the settings for the plugin for use throughout the project
 	readonly REGEX_CURLY_MATCH = /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/dg;
@@ -25,13 +23,6 @@ class ConcealViewPlugin implements PluginValue {
 	constructor(view: EditorView) {
 		this.matchDecorator = new ConcealMatchDecorator({
 			regexp: this.REGEX_CURLY_MATCH,
-			// decoration: (match): Decoration => {
-			// 	// `match` is the result of `regexp.exec`
-			// 	// TODO: I would like some verbose logging here, specifically a debug log
-			// 	return Decoration.replace({
-			// 		widget: new MatchWidget(match[1]), // The second element in `match` is the first capture group
-			// 	});
-			// },
 			decorate: (add, from, to, match, view): void => {
 				// Current location of cursor or selected range
 				const selection = view.state.selection;
@@ -43,6 +34,7 @@ class ConcealViewPlugin implements PluginValue {
 						from + match[0].length,
 						Decoration.replace({
 							widget: new MatchWidget(match, view),
+							inclusive: true,
 						}),
 					);
 				}
