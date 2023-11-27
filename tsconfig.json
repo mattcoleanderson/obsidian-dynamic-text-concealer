@@ -1,19 +1,17 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./",
-	"inlineSourceMap": true,
-    "module": "CommonJS",
-    "target": "ES6",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "moduleResolution": "NodeNext",
-    "isolatedModules": true,
-	"strictNullChecks": true,
-    "lib": [
-      "DOM",
-      "ES5",
-      "ES6",
-      "ES7"
-    ]
-  }
+	"compilerOptions": {
+		"baseUrl": "./",
+		"inlineSourceMap": true,
+		"module": "CommonJS",
+		"target": "ES2022",
+		"allowJs": true,
+		"noImplicitAny": true,
+		"moduleResolution": "NodeNext",
+		"isolatedModules": true,
+		"strictNullChecks": true,
+		"lib": [
+			"DOM",
+			"ES2022"
+		]
+	}
 }

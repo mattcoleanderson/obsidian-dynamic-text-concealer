@@ -6,9 +6,11 @@ The following are different clozure syntaxes. This list was copied from https://
 
 ## Paragraph Style Tests
 
-Test a single {cloze} note.
+((test]]
 
-Test  {2} cloze {notes}.
+Test a single {cloze}  note. 
+
+Test {2} cloze {notes}.
 
 Test a {{single}} double cloze note.
 
