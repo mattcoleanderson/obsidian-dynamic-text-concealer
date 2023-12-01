@@ -26,7 +26,7 @@ export default class ConcealPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		console.log('Loading Obsidian To Anki Clozure Conceal Plugin');
+		console.log('Loading Obsidian Conceal Plugin');
 
 		this.registerMarkdownPostProcessor(concealPostProcessor);
 		this.registerEditorExtension([this.editorExtensions]);
@@ -58,7 +58,7 @@ export default class ConcealPlugin extends Plugin {
 
 	// Releases any resources configured by the plugin
 	onunload() {
-		console.log('Unloading Obsidian To Anki Clozure Conceal Plugin');
+		console.log('Unloading Obsidian Conceal Plugin');
 	}
 }
 
