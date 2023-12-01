@@ -3,20 +3,21 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import copy from 'rollup-plugin-copy';
 
-const PROJECT_NAME = 'obsidian-to-anki-clozure-conceal';
+const PROJECT_NAME = 'obsidian-conceal-plugin';
 const TEST_VAULT_PLUGIN_DIR = `test-vault/.obsidian/plugins/${PROJECT_NAME}`;
 const BUILD_DIR = 'build';
 
 const BASE_CONFIG = {
 	input: 'src/main.ts',
-	external: ['obsidian', '@codemirror/view', '@codemirror/state', '@codemirror/language']
+	external: ['obsidian', '@codemirror/view', '@codemirror/state', '@codemirror/language'],
 };
 
-const getRollupPlugins = (...plugins) => [
-	typescript({ compilerOptions: { module: "ESNext" } }), // Rollup requires ES Modules
-	nodeResolve({ browser: true }),
-	commonjs()
-].concat(plugins);
+const getRollupPlugins = (...plugins) =>
+	[
+		typescript({ compilerOptions: { module: 'ESNext' } }), // Rollup requires ES Modules
+		nodeResolve({ browser: true }),
+		commonjs(),
+	].concat(plugins);
 
 const DEV_PLUGIN_CONFIG = {
 	...BASE_CONFIG,
@@ -24,16 +25,16 @@ const DEV_PLUGIN_CONFIG = {
 		dir: TEST_VAULT_PLUGIN_DIR,
 		sourcemap: 'inline',
 		format: 'cjs',
-		exports: 'auto'
+		exports: 'auto',
 	},
 	plugins: getRollupPlugins(
 		copy({
 			targets: [
 				{ src: 'manifest.json', dest: `${TEST_VAULT_PLUGIN_DIR}/` },
-				{ src: 'styles.css', dest: `${TEST_VAULT_PLUGIN_DIR}/` }
-			]
-		})
-	)
+				{ src: 'styles.css', dest: `${TEST_VAULT_PLUGIN_DIR}/` },
+			],
+		}),
+	),
 };
 
 const PROD_PLUGIN_CONFIG = {
@@ -43,9 +44,9 @@ const PROD_PLUGIN_CONFIG = {
 		sourcemap: 'inline',
 		sourcemapExcludeSources: true,
 		format: 'cjs',
-		exports: 'auto'
+		exports: 'auto',
 	},
-	plugins: getRollupPlugins()
+	plugins: getRollupPlugins(),
 };
 
 // TODO: Create environment specific builds (dev, prod, etc.)

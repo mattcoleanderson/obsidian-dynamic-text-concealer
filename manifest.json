@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-to-anki-clozure-conceal",
-	"name": "Obsidian to Anki Clozure Conceal",
+	"id": "obsidian-conceal-plugin",
+	"name": "Obsidian Conceal Plugin",
 	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
-	"description": "This plugin is meant to enhance Obsidian to Anki Plugin by concealing clozure syntax in Read Mode",
+	"description": "This plugin is meant to conceal user configured text in Live Preview and Read Mode",
 	"author": "Matthew Anderson",
 	"authorUrl": "https://obsidian.md",
 	"fundingUrl": "https://obsidian.md/pricing",
