@@ -9,12 +9,12 @@ import { concealPostProcessor } from './markdownPostProcessors/conceal-post-proc
 // Settings
 // TODO: Add Settings
 const DEFAULT_SETTINGS: PluginSettings = {
-	mySetting: 'default',
+	doConcealEditMode: true,
 };
 
 export default class ConcealPlugin extends Plugin {
 	settings: PluginSettings;
-	editorExtensions: Extension = concealViewPlugin; // TODO: Don't hardcode this. Instead, this should be a List of Extensions updated by a function
+	editorExtensions: Extension[] = [];
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -29,7 +29,9 @@ export default class ConcealPlugin extends Plugin {
 		console.log('Loading Obsidian Conceal Plugin');
 
 		this.registerMarkdownPostProcessor(concealPostProcessor);
-		this.registerEditorExtension([this.editorExtensions]);
+
+		this.addEditorExtension();
+		this.registerEditorExtension(this.editorExtensions);
 
 		// TODO: Add obsidian typing for EditorView to Editor
 		// See :
@@ -56,9 +58,21 @@ export default class ConcealPlugin extends Plugin {
 		this.addSettingTab(new SettingsTab(this.app, this));
 	}
 
+	addEditorExtension() {
+		this.editorExtensions.length = 0;
+		if (this.settings.doConcealEditMode) {
+			this.editorExtensions.push(concealViewPlugin);
+		}
+	}
+
+	updateEditorExtension() {
+		this.addEditorExtension();
+		this.app.workspace.updateOptions();
+	}
+
 	// Releases any resources configured by the plugin
 	onunload() {
-		console.log('Unloading Obsidian Conceal Plugin');
+		console.log('Unloading Obsidian ure Conceal Plugin');
 	}
 }
 
