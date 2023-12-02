@@ -1,3 +1,3 @@
 export interface PluginSettings {
-	mySetting: string;
+	doConcealEditMode: boolean;
 }

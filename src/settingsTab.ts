@@ -14,17 +14,20 @@ export class SettingsTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
+		containerEl.createEl('h2', { text: 'Obsidian Conceal Plugin - Settings' });
+
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc("It's a secret")
-			.addText((text) =>
-				text
-					.setPlaceholder('Enter your secret')
-					.setValue(this.plugin.settings.mySetting)
-					.onChange(async (value) => {
-						this.plugin.settings.mySetting = value;
-						await this.plugin.saveSettings();
-					}),
+			.setName('Conceal in Editing Mode')
+			.setDesc(
+				`Matched text is concealed in editing mode (live preview),
+				 except when cursor or selection overlaps with matched text.`,
+			)
+			.addToggle((toggle) =>
+				toggle.setValue(this.plugin.settings.doConcealEditMode).onChange(async (value) => {
+					this.plugin.settings.doConcealEditMode = value;
+					await this.plugin.saveSettings();
+					this.plugin.updateEditorExtension();
+				}),
 			);
 	}
 }
