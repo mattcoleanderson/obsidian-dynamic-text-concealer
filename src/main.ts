@@ -29,7 +29,10 @@ export default class ConcealPlugin extends Plugin {
 	addEditorExtension() {
 		this.editorExtensions.length = 0;
 		if (this.settings.doConcealEditMode) {
-			this.editorExtensions.push(concealViewPlugin);
+			this.settings.regexp.forEach((regexString) => {
+				const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+				this.editorExtensions.push(concealViewPlugin(regex));
+			});
 		}
 	}
 

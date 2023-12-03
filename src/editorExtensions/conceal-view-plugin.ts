@@ -14,15 +14,12 @@ import { ConcealMatchDecorator } from './conceal-match-decorator';
 import { MatchWidget } from './match-widget';
 
 class ConcealViewPlugin implements PluginValue {
-	// TODO: Extract to the settings for the plugin for use throughout the project
-	readonly REGEX_CURLY_MATCH = /{{1,2}(?![\s{])(?:c?\d+(?::{1,2}|\|))?(?<answer>[^}]+)}{1,2}/dg;
-
 	decorations: DecorationSet; // list of current decorators in view
 	matchDecorator: MatchDecorator; // Creates and updates decorators
 
-	constructor(view: EditorView) {
+	constructor(view: EditorView, regexp: RegExp) {
 		this.matchDecorator = new ConcealMatchDecorator({
-			regexp: this.REGEX_CURLY_MATCH,
+			regexp: regexp,
 			decorate: (add, from, to, match, view): void => {
 				// Current location of cursor or selected range
 				const selection = view.state.selection;
@@ -89,9 +86,12 @@ const pluginSpec: PluginSpec<ConcealViewPlugin> = {
 	decorations: (instance: ConcealViewPlugin) => instance.decorations,
 };
 
-// concealViewPlugin is the main export for this class
-// and is used to register the editorExtension in main.ts
-export const concealViewPlugin = ViewPlugin.fromClass(ConcealViewPlugin, pluginSpec);
+/**
+ * concealViewPlugin creates a ViewPlugin to be registers as an editorExtension
+ */
+export const concealViewPlugin = (regexp: RegExp) => {
+	return ViewPlugin.define((view) => new ConcealViewPlugin(view, regexp), pluginSpec);
+};
 
 /**
  * A state effect that represents the workspace's layout change.
