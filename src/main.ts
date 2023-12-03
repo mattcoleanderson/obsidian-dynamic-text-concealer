@@ -1,9 +1,9 @@
-import { App, Editor, editorEditorField, MarkdownView, Modal, Notice, Plugin } from 'obsidian';
+import { App, MarkdownView, Modal, Plugin } from 'obsidian';
 import { SettingsTab } from './settingsTab';
-import { Decoration, EditorView, PluginValue, ViewPlugin } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
 import { concealViewPlugin, workspaceLayoutChangeEffect } from './editorExtensions/conceal-view-plugin';
-import { concealPostProcessor } from './markdownPostProcessors/conceal-post-processor';
+import { ConcealPostProcessor } from './markdownPostProcessors/conceal-post-processor';
 import { PluginSettings } from './interfaces/plugin-settings';
 
 // Settings
@@ -64,11 +64,19 @@ export default class ConcealPlugin extends Plugin {
 		}
 	}
 
+	addMarkdownPostProcessor() {
+		this.settings.regexp.forEach((regexString) => {
+			const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+			const concealPostProcessor = new ConcealPostProcessor(regex);
+			this.registerMarkdownPostProcessor(concealPostProcessor.process);
+		});
+	}
+
 	async onload() {
 		await this.loadSettings();
 		console.log('Loading Obsidian Conceal Plugin');
 
-		this.registerMarkdownPostProcessor(concealPostProcessor);
+		this.addMarkdownPostProcessor();
 
 		this.addEditorExtension();
 		this.registerEditorExtension(this.editorExtensions);
