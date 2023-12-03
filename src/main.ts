@@ -1,15 +1,17 @@
 import { App, Editor, editorEditorField, MarkdownView, Modal, Notice, Plugin } from 'obsidian';
-import { PluginSettings } from './interfaces/plugin-settings';
 import { SettingsTab } from './settingsTab';
 import { Decoration, EditorView, PluginValue, ViewPlugin } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
 import { concealViewPlugin, workspaceLayoutChangeEffect } from './editorExtensions/conceal-view-plugin';
 import { concealPostProcessor } from './markdownPostProcessors/conceal-post-processor';
+import { PluginSettings } from './interfaces/plugin-settings';
 
 // Settings
 // TODO: Add Settings
 const DEFAULT_SETTINGS: PluginSettings = {
 	doConcealEditMode: true,
+	regexp: ['{{1,2}(?![\\s{])(?:c?\\d+(?::{1,2}|\\|))?(?<answer>[^}]+)}{1,2}'],
+	enable: true,
 };
 
 export default class ConcealPlugin extends Plugin {

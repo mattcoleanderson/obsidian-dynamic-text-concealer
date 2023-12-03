@@ -1,5 +1,5 @@
 export interface PluginSettings {
 	doConcealEditMode: boolean;
-	regexp: string;
+	regexp: Array<string>;
 	enable: boolean;
 }
