@@ -64,6 +64,7 @@ export class SettingsTab extends PluginSettingTab {
 					}
 					this.plugin.settings.regexp[index] = newRegex;
 					this.plugin.saveSettings();
+					this.plugin.updateEditorExtension();
 				});
 			});
 		});
