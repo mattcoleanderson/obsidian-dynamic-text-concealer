@@ -9,46 +9,64 @@ export class SettingsTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
-	setupRegexp(headerRow: HTMLTableRowElement, bodyRow: HTMLTableRowElement) {
-		// Table Header
-		headerRow.createEl('th', { text: 'REGEXP' });
-		// Table Body
-		let cell = bodyRow.createEl('td');
-		let setting = new Setting(cell).addText((text) =>
-			text.setValue(this.plugin.settings.regexp).onChange(async (value) => {
-				this.plugin.settings.regexp = value;
-				await this.plugin.saveSettings();
-			}),
-		);
-	}
+	// setupRegexp(headerRow: HTMLTableRowElement, bodyRow: HTMLTableRowElement) {
+	// 	// Table Header
+	// 	headerRow.createEl('th', { text: 'REGEXP' });
+	// 	// Table Body
+	// 	let cell = bodyRow.createEl('td');
+	// 	let setting = new Setting(cell).addText((text) =>
+	// 		text.setValue(this.plugin.settings.regexp).onChange(async (value) => {
+	// 			this.plugin.settings.regexp = value;
+	// 			await this.plugin.saveSettings();
+	// 		}),
+	// 	);
+	// }
 
-	setupEnable(headerRow: HTMLTableRowElement, bodyRow: HTMLTableRowElement) {
-		// Table Header
-		headerRow.createEl('th', { text: 'Enable' });
-		// Table Body
-		let cell = bodyRow.createEl('td');
-		let setting = new Setting(cell).addToggle((toggle) =>
-			toggle.setValue(this.plugin.settings.enable).onChange(async (value) => {
-				this.plugin.settings.enable = value;
-				await this.plugin.saveSettings();
-			}),
-		);
-	}
+	// setupEnable(headerRow: HTMLTableRowElement, bodyRow: HTMLTableRowElement) {
+	// 	// Table Header
+	// 	headerRow.createEl('th', { text: 'Enable' });
+	// 	// Table Body
+	// 	let cell = bodyRow.createEl('td');
+	// 	let setting = new Setting(cell).addToggle((toggle) =>
+	// 		toggle.setValue(this.plugin.settings.enable).onChange(async (value) => {
+	// 			this.plugin.settings.enable = value;
+	// 			await this.plugin.saveSettings();
+	// 		}),
+	// 	);
+	// }
 
-	setupMatchTable() {
-		this.containerEl.createEl('h3', { text: 'Conceal Patterns' });
-		this.containerEl.createEl('p', { text: 'Each row is a REGEX pattern for concealing matched text.' });
+	// setupMatchTable() {
+	// 	this.containerEl.createEl('h3', { text: 'Conceal Patterns' });
+	// 	this.containerEl.createEl('p', { text: 'Each row is a REGEX pattern for concealing matched text.' });
 
-		// Table
-		let matchTable = this.containerEl.createEl('table', { cls: 'conceal-settings-match-table' });
-		// Table Header
-		let headerRow = matchTable.createTHead().insertRow();
-		// Table Body
-		let tableBody = matchTable.createTBody();
-		let bodyRow = tableBody.insertRow();
+	// 	// Table
+	// 	let matchTable = this.containerEl.createEl('table', { cls: 'conceal-settings-match-table' });
+	// 	// Table Header
+	// 	let headerRow = matchTable.createTHead().insertRow();
+	// 	// Table Body
+	// 	let tableBody = matchTable.createTBody();
+	// 	let bodyRow = tableBody.insertRow();
 
-		this.setupRegexp(headerRow, bodyRow);
-		this.setupEnable(headerRow, bodyRow);
+	// 	this.setupRegexp(headerRow, bodyRow);
+	// 	this.setupEnable(headerRow, bodyRow);
+	// }
+
+	addRegexSettings() {
+		this.containerEl.createEl('h2', { text: 'Regex Expressions' });
+		this.containerEl.createEl('p', { text: 'Custom regex allows you to specify patterns to conceal' });
+
+		this.plugin.settings.regexp.forEach((regex, index) => {
+			const setting = new Setting(this.containerEl).addText((text) => {
+				text.setValue(regex).onChange((newRegex) => {
+					if (newRegex && this.plugin.settings.regexp.contains(newRegex)) {
+						// TODO: Log Error
+						return;
+					}
+					this.plugin.settings.regexp[index] = newRegex;
+					this.plugin.saveSettings();
+				});
+			});
+		});
 	}
 
 	async display() {
@@ -62,20 +80,21 @@ export class SettingsTab extends PluginSettingTab {
 			href: 'https://github.com/mattcoleanderson/obsidian-conceal-plugin/wiki',
 		});
 
-		new Setting(containerEl)
-			.setName('Conceal in Editing Mode')
-			.setDesc(
-				`Matched text is concealed in editing mode (live preview),
-				 except when cursor or selection overlaps with matched text.`,
-			)
-			.addToggle((toggle) =>
-				toggle.setValue(this.plugin.settings.doConcealEditMode).onChange(async (value) => {
-					this.plugin.settings.doConcealEditMode = value;
-					await this.plugin.saveSettings();
-					this.plugin.updateEditorExtension();
-				}),
-			);
+		// new Setting(containerEl)
+		// 	.setName('Conceal in Editing Mode')
+		// 	.setDesc(
+		// 		`Matched text is concealed in editing mode (live preview),
+		// 		 except when cursor or selection overlaps with matched text.`,
+		// 	)
+		// 	.addToggle((toggle) =>
+		// 		toggle.setValue(this.plugin.settings.doConcealEditMode).onChange(async (value) => {
+		// 			this.plugin.settings.doConcealEditMode = value;
+		// 			await this.plugin.saveSettings();
+		// 			this.plugin.updateEditorExtension();
+		// 		}),
+		// 	);
 
-		this.setupMatchTable();
+		// this.setupMatchTable();
+		this.addRegexSettings();
 	}
 }
