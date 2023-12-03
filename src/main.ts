@@ -24,40 +24,6 @@ export default class ConcealPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
-	async onload() {
-		await this.loadSettings();
-		console.log('Loading Obsidian Conceal Plugin');
-
-		this.registerMarkdownPostProcessor(concealPostProcessor);
-
-		this.addEditorExtension();
-		this.registerEditorExtension(this.editorExtensions);
-
-		// TODO: Add obsidian typing for EditorView to Editor
-		// See :
-		//	- https://docs.obsidian.md/Plugins/Editor/Communicating+with+editor+extensions
-		//	- https://github.com/blacksmithgu/obsidian-dataview/pull/2088/files
-		this.registerEvent(
-			this.app.workspace.on('layout-change', () => {
-				this.app.workspace.iterateAllLeaves((leaf) => {
-					if (
-						leaf.view instanceof MarkdownView &&
-						// @ts-expect-error, not typed
-						(leaf.view.editor.cm as EditorView)
-					) {
-						// @ts-expect-error, not typed
-						const cm = leaf.view.editor.cm as EditorView;
-						cm.dispatch({
-							effects: workspaceLayoutChangeEffect.of(null),
-						});
-					}
-				});
-			}),
-		);
-
-		this.addSettingTab(new SettingsTab(this.app, this));
-	}
-
 	addEditorExtension() {
 		this.editorExtensions.length = 0;
 		if (this.settings.doConcealEditMode) {
@@ -68,6 +34,45 @@ export default class ConcealPlugin extends Plugin {
 	updateEditorExtension() {
 		this.addEditorExtension();
 		this.app.workspace.updateOptions();
+	}
+
+	addEvents() {
+		if (this.settings.doConcealEditMode) {
+			// TODO: Add obsidian typing for EditorView to Editor
+			// See :
+			//	- https://docs.obsidian.md/Plugins/Editor/Communicating+with+editor+extensions
+			//	- https://github.com/blacksmithgu/obsidian-dataview/pull/2088/files
+			this.registerEvent(
+				this.app.workspace.on('layout-change', () => {
+					this.app.workspace.iterateAllLeaves((leaf) => {
+						if (
+							leaf.view instanceof MarkdownView &&
+							// @ts-expect-error, not typed
+							(leaf.view.editor.cm as EditorView)
+						) {
+							// @ts-expect-error, not typed
+							const cm = leaf.view.editor.cm as EditorView;
+							cm.dispatch({
+								effects: workspaceLayoutChangeEffect.of(null),
+							});
+						}
+					});
+				}),
+			);
+		}
+	}
+
+	async onload() {
+		await this.loadSettings();
+		console.log('Loading Obsidian Conceal Plugin');
+
+		this.registerMarkdownPostProcessor(concealPostProcessor);
+
+		this.addEditorExtension();
+		this.registerEditorExtension(this.editorExtensions);
+		this.addEvents();
+
+		this.addSettingTab(new SettingsTab(this.app, this));
 	}
 
 	// Releases any resources configured by the plugin
