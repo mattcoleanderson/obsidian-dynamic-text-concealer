@@ -34,14 +34,14 @@ test-vault/.obsidian/*
 # Exclude Dir: -------------------------------------------------------------------------------------
 test-vault/.obsidian/plugins/*
 # Include various files/subdirs in above dir: --------------------------------------------
-!test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/
+!test-vault/.obsidian/plugins/obsidian-conceal-plugin/
 !test-vault/.obsidian/plugins/hot-reload/
 
 # Exclude Dir: -------------------------------------------------------------------------------------
-test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/*
+test-vault/.obsidian/plugins/obsidian-conceal-plugin/*
 # Include various files/subdirs in above dir: --------------------------------------------
 # This empty file tells the hot-reload plugin to reload this plugin
-!test-vault/.obsidian/plugins/obsidian-to-anki-clozure-conceal/.hotreload
+!test-vault/.obsidian/plugins/obsidian-conceal-plugin/.hotreload
 
 # Exclude Dir: -------------------------------------------------------------------------------------
 # This will be for testing random things in the test-vault

@@ -1,56 +1,22 @@
-import { App, Editor, editorEditorField, MarkdownView, Modal, Notice, Plugin } from 'obsidian';
-import { PluginSettings } from './interfaces/pluginSettings';
+import { App, MarkdownView, Modal, Plugin } from 'obsidian';
 import { SettingsTab } from './settingsTab';
-import { Decoration, EditorView, PluginValue, ViewPlugin } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
 import { concealViewPlugin, workspaceLayoutChangeEffect } from './editorExtensions/conceal-view-plugin';
-import { concealPostProcessor } from './markdownPostProcessors/conceal-post-processor';
+import { ConcealPostProcessor } from './markdownPostProcessors/conceal-post-processor';
+import { PluginSettings } from './interfaces/plugin-settings';
 
 // Settings
 // TODO: Add Settings
 const DEFAULT_SETTINGS: PluginSettings = {
-	mySetting: 'default',
+	doConcealEditMode: true,
+	regexp: ['{{1,2}(?![\\s{])(?:c?\\d+(?::{1,2}|\\|))?(?<answer>[^}]+)}{1,2}'],
+	enable: true,
 };
 
-export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
+export default class ConcealPlugin extends Plugin {
 	settings: PluginSettings;
-	editorExtensions: Extension = concealViewPlugin; // TODO: Don't hardcode this. Instead, this should be a List of Extensions updated by a function
-
-	async onload() {
-		await this.loadSettings();
-		console.log('Loading Obsidian To Anki Clozure Conceal Plugin');
-
-		this.registerMarkdownPostProcessor(concealPostProcessor);
-
-		this.registerEditorExtension([this.editorExtensions]);
-
-		// TODO: Add obsidian typing for EditorView to Editor
-		// See :
-		//	- https://docs.obsidian.md/Plugins/Editor/Communicating+with+editor+extensions
-		//	- https://github.com/blacksmithgu/obsidian-dataview/pull/2088/files
-		this.registerEvent(
-			this.app.workspace.on('layout-change', () => {
-				this.app.workspace.iterateAllLeaves((leaf) => {
-					if (
-						leaf.view instanceof MarkdownView &&
-						// @ts-expect-error, not typed
-						(leaf.view.editor.cm as EditorView)
-					) {
-						// @ts-expect-error, not typed
-						const cm = leaf.view.editor.cm as EditorView;
-						cm.dispatch({
-							effects: workspaceLayoutChangeEffect.of(null),
-						});
-					}
-				});
-			}),
-		);
-	}
-
-	// Releases any resources configured by the plugin
-	onunload() {
-		console.log('Unloading Obsidian To Anki Clozure Conceal Plugin');
-	}
+	editorExtensions: Extension[] = [];
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
@@ -58,6 +24,74 @@ export default class ObsidianToAnkiClozureConcealPlugin extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+	}
+
+	addEditorExtension() {
+		this.editorExtensions.length = 0;
+		if (this.settings.doConcealEditMode) {
+			this.settings.regexp.forEach((regexString) => {
+				if (!regexString) return; // skip if input is empty
+				const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+				this.editorExtensions.push(concealViewPlugin(regex));
+			});
+		}
+	}
+
+	updateEditorExtension() {
+		this.addEditorExtension();
+		this.app.workspace.updateOptions();
+	}
+
+	addEvents() {
+		if (this.settings.doConcealEditMode) {
+			// TODO: Add obsidian typing for EditorView to Editor
+			// See :
+			//	- https://docs.obsidian.md/Plugins/Editor/Communicating+with+editor+extensions
+			//	- https://github.com/blacksmithgu/obsidian-dataview/pull/2088/files
+			this.registerEvent(
+				this.app.workspace.on('layout-change', () => {
+					this.app.workspace.iterateAllLeaves((leaf) => {
+						if (
+							leaf.view instanceof MarkdownView &&
+							// @ts-expect-error, not typed
+							(leaf.view.editor.cm as EditorView)
+						) {
+							// @ts-expect-error, not typed
+							const cm = leaf.view.editor.cm as EditorView;
+							cm.dispatch({
+								effects: workspaceLayoutChangeEffect.of(null),
+							});
+						}
+					});
+				}),
+			);
+		}
+	}
+
+	addMarkdownPostProcessor() {
+		this.settings.regexp.forEach((regexString) => {
+			const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+			const concealPostProcessor = new ConcealPostProcessor(regex);
+			this.registerMarkdownPostProcessor(concealPostProcessor.process);
+		});
+	}
+
+	async onload() {
+		await this.loadSettings();
+		console.log('Loading Obsidian Conceal Plugin');
+
+		this.addMarkdownPostProcessor();
+
+		this.addEditorExtension();
+		this.registerEditorExtension(this.editorExtensions);
+		this.addEvents();
+
+		this.addSettingTab(new SettingsTab(this.app, this));
+	}
+
+	// Releases any resources configured by the plugin
+	onunload() {
+		console.log('Unloading Obsidian ure Conceal Plugin');
 	}
 }
 
