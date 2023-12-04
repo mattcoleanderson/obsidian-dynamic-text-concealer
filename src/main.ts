@@ -30,6 +30,7 @@ export default class ConcealPlugin extends Plugin {
 		this.editorExtensions.length = 0;
 		if (this.settings.doConcealEditMode) {
 			this.settings.regexp.forEach((regexString) => {
+				if (!regexString) return; // skip if input is empty
 				const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
 				this.editorExtensions.push(concealViewPlugin(regex));
 			});
