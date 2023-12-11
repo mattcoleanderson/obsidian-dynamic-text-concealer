@@ -2,16 +2,22 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"inlineSourceMap": true,
-		"module": "CommonJS",
+		"module": "ESNext",
 		"target": "ES2022",
 		"allowJs": true,
 		"noImplicitAny": true,
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "node",
+		"importHelpers": true,
 		"isolatedModules": true,
 		"strictNullChecks": true,
 		"lib": [
 			"DOM",
 			"ES2022"
 		]
-	}
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts",
+		"docs/**/*"
+	]
 }
