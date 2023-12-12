@@ -1,5 +1,6 @@
 ## December 2023
 
+- Update README.md (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/15)
 - Don't conceal matches in codeblocks (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/14)
 - Add `d` flag to regexp in live edit mode to make the indices property available (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/12)
 - Remove module override from rollup config (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/11)
