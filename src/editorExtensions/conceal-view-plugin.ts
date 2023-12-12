@@ -52,7 +52,7 @@ class ConcealViewPlugin implements PluginValue {
 			from,
 			to,
 			enter: (node) => {
-				if (node.name == 'inline-code' || node.name == 'HyperMD-codeblock_HyperMD-codeblock-bg') {
+				if (/^inline-code/.test(node.name) || node.name == 'HyperMD-codeblock_HyperMD-codeblock-bg') {
 					isCodeblock = true;
 					return false; // short circuit child iteration
 				}
