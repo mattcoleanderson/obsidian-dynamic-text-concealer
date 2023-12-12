@@ -12,12 +12,7 @@ const BASE_CONFIG = {
 	external: ['obsidian', '@codemirror/view', '@codemirror/state', '@codemirror/language'],
 };
 
-const getRollupPlugins = (...plugins) =>
-	[
-		typescript({ compilerOptions: { module: 'ESNext' } }), // Rollup requires ES Modules
-		nodeResolve({ browser: true }),
-		commonjs(),
-	].concat(plugins);
+const getRollupPlugins = (...plugins) => [typescript(), nodeResolve({ browser: true }), commonjs()].concat(plugins);
 
 const DEV_PLUGIN_CONFIG = {
 	...BASE_CONFIG,
