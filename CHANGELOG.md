@@ -1,5 +1,6 @@
 ## December 2023
 
+- Remove module override from rollup config (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/11)
 - Make changes to tsconfig to satisfy warnings on build (https://github.com/mattcoleanderson/obsidian-conceal-plugin/pull/4)
 
 ## November 2023
