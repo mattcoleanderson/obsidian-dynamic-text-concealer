@@ -31,7 +31,12 @@ export default class ConcealPlugin extends Plugin {
 		if (this.settings.doConcealEditMode) {
 			this.settings.regexp.forEach((regexString) => {
 				if (!regexString) return; // skip if input is empty
-				const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+
+				// Create regex expression from user settings
+				// Note: the 'd' flag, enables regexpmatch indices for enabling clickable replacement text
+				//			 see: https://github.com/tc39/proposal-regexp-match-indices?tab=readme-ov-file#motivations
+				const regex = new RegExp(regexString, 'gmd');
+
 				this.editorExtensions.push(concealViewPlugin(regex));
 			});
 		}
