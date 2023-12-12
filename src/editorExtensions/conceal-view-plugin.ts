@@ -12,6 +12,7 @@ import {
 import { editorLivePreviewField } from 'obsidian';
 import { ConcealMatchDecorator } from './conceal-match-decorator';
 import { MatchWidget } from './match-widget';
+import { syntaxTree } from '@codemirror/language';
 
 class ConcealViewPlugin implements PluginValue {
 	decorations: DecorationSet; // list of current decorators in view
@@ -21,20 +22,19 @@ class ConcealViewPlugin implements PluginValue {
 		this.matchDecorator = new ConcealMatchDecorator({
 			regexp: regexp,
 			decorate: (add, from, to, match, view): void => {
-				// Current location of cursor or selected range
-				const selection = view.state.selection;
-				// Replace match if not overlapping with the cursor
-				if (!this.selectionAndRangeOverlap(selection, from, to)) {
-					// Add Replace Decoration to DecorationSet. The First caputre group will replace the match
-					add(
-						from,
-						from + match[0].length,
-						Decoration.replace({
-							widget: new MatchWidget(match, view),
-							inclusive: true,
-						}),
-					);
-				}
+				// Define conditions where a decorator should not be added for a match
+				if (this.isCodeblock(view, from, to)) return;
+				if (this.selectionAndRangeOverlap(view.state.selection, from, to)) return;
+
+				// Add decorator to replace match with the 'answer' capture group
+				add(
+					from,
+					from + match[0].length,
+					Decoration.replace({
+						widget: new MatchWidget(match, view),
+						inclusive: true,
+					}),
+				);
 			},
 		});
 
@@ -43,10 +43,29 @@ class ConcealViewPlugin implements PluginValue {
 	}
 
 	/**
+	 * isCodeblock returns true if the current current matches
+	 * from and to position contains a code block
+	 */
+	private isCodeblock(view: EditorView, from: number, to: number): boolean {
+		let isCodeblock = false;
+		syntaxTree(view.state).iterate({
+			from,
+			to,
+			enter: (node) => {
+				if (node.name == 'inline-code' || node.name == 'HyperMD-codeblock_HyperMD-codeblock-bg') {
+					isCodeblock = true;
+					return false; // short circuit child iteration
+				}
+			},
+		});
+		return isCodeblock;
+	}
+
+	/**
 	 * selectionAndRangeOverlap returns true if the specified range
 	 * overlaps with the current cursor location or selection range
 	 */
-	private selectionAndRangeOverlap(selection: EditorSelection, rangeFrom: number, rangeTo: number) {
+	private selectionAndRangeOverlap(selection: EditorSelection, rangeFrom: number, rangeTo: number): boolean {
 		for (const range of selection.ranges) {
 			if (range.from <= rangeTo && range.to >= rangeFrom) {
 				return true;
