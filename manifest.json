@@ -4,8 +4,8 @@
 	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "This plugin is meant to conceal user configured text in Live Preview and Read Mode",
-	"author": "Matthew Anderson",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"author": "Matt Cole Anderson",
+	"authorUrl": "https://github.com/mattcoleanderson",
+	"fundingUrl": "https://www.buymeacoffee.com/mattcoleanderson",
 	"isDesktopOnly": false
 }
