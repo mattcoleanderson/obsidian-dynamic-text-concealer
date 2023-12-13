@@ -4,7 +4,7 @@ import { EditorView, WidgetType } from '@codemirror/view';
 // element used to replace a regex pattern match
 export class MatchWidget extends WidgetType {
 	// class name of replaced DOM element. Can be used for custom styling.
-	readonly CLASS_NAME = 'clozure-conceal'; // TODO: Figure out a better class name
+	readonly CLASS_NAME = 'obsidian-conceal';
 
 	constructor(
 		public match: RegExpExecArray, // The capture group of the matched regex. Used to replace text

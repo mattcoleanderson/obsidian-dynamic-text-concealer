@@ -7,7 +7,6 @@ import { ConcealPostProcessor } from './markdownPostProcessors/conceal-post-proc
 import { PluginSettings } from './interfaces/plugin-settings';
 
 // Settings
-// TODO: Add Settings
 const DEFAULT_SETTINGS: PluginSettings = {
 	doConcealEditMode: true,
 	regexp: ['{{1,2}(?![\\s{])(?:c?\\d+(?::{1,2}|\\|))?(?<answer>[^}]+)}{1,2}'],
