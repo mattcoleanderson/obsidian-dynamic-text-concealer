@@ -19,8 +19,18 @@ export class SettingsTab extends PluginSettingTab {
 	}
 
 	addRegexSettings() {
-		this.containerEl.createEl('h2', { text: 'Regex Expressions' });
-		this.containerEl.createEl('p', { text: 'Custom regex allows you to specify patterns to conceal' });
+		let desc = document.createDocumentFragment();
+		desc.append(
+			'Custom Regex for specifying patterns to conceal/replace.',
+			desc.createEl('br'),
+			'Check the ',
+			desc.createEl('a', {
+				href: 'https://github.com/mattcoleanderson/obsidian-conceal-plugin/discussions/19',
+				text: 'List of Community Made Regex',
+			}),
+			' Discussion for working examples. Feel free to add your own as well.',
+		);
+		new Setting(this.containerEl).setHeading().setName('Regular Expressions').setDesc(desc);
 
 		this.plugin.settings.regexp.forEach((regex, index) => {
 			const setting = new Setting(this.containerEl)
