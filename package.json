@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-conceal-plugin",
+	"name": "dynamic-text-concealer",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Conceal or replace user configured text patterns in Live Preview and Read Mode.",
 	"main": "main.js",
 	"type": "commonjs",
 	"scripts": {
@@ -10,15 +10,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/manderson21/obsidian-to-anki-clozure-conceal.git"
+		"url": "git+https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer.git"
 	},
 	"keywords": [],
-	"author": "Matthew Anderson <@manderson21>",
+	"author": "Matt Cole Anderson <@mattcoleanderson>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/manderson21/obsidian-to-anki-clozure-conceal/issues"
+		"url": "https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/issues"
 	},
-	"homepage": "https://github.com/manderson21/obsidian-to-anki-clozure-conceal#readme",
+	"homepage": "https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer#readme",
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",

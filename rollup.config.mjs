@@ -3,7 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import copy from 'rollup-plugin-copy';
 
-const PROJECT_NAME = 'obsidian-conceal-plugin';
+const PROJECT_NAME = 'obsidian-dynamic-text-concealer';
 const TEST_VAULT_PLUGIN_DIR = `test-vault/.obsidian/plugins/${PROJECT_NAME}`;
 const BUILD_DIR = 'build';
 

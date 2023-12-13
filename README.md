@@ -1,4 +1,4 @@
-# Obsidian Conceal Plugin
+# Obsidian Dynamic Text Concealer
 
 An [Obsidian](https://obsidian.md) plugin to dynamically replace content of a note using user defined Regular Expressions.
 
@@ -12,18 +12,18 @@ For example, [Obsidian to Anki](https://github.com/Pseudonium/Obsidian_to_Anki/w
 
 ### Regex used in example
 
-![image](https://github.com/mattcoleanderson/obsidian-conceal-plugin/assets/49250378/b97faaf7-ed7d-4ab7-b4a8-cfb9d0bfbb39)
+![image](https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/assets/49250378/b97faaf7-ed7d-4ab7-b4a8-cfb9d0bfbb39)
 
 ### Example conceal in Source, Edit, and Read mode
 
-![2023-12-12 16 36 32](https://github.com/mattcoleanderson/obsidian-conceal-plugin/assets/49250378/e00604c3-21b6-43cf-82cb-a015439253c9)
+![2023-12-12 16 36 32](https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/assets/49250378/e00604c3-21b6-43cf-82cb-a015439253c9)
 
 ## Discussions
 
 Overtime I hope we can amass a collection of user created Regex for various use cases.
 
 If you have a Regex you would like to share, I encourage you to leave a comment on 
-the [List of Community Made Regex](https://github.com/mattcoleanderson/obsidian-conceal-plugin/discussions/19) discussion.
+the [List of Community Made Regex](https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/discussions/19) discussion.
 
 ## Support
 

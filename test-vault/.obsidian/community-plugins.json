@@ -1,5 +1,4 @@
 [
-  "obsidian-to-anki-clozure-conceal",
-  "hot-reload",
-  "obsidian-conceal-plugin"
+	"hot-reload",
+	"dynamic-text-concealer"
 ]
