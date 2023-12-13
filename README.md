@@ -18,6 +18,13 @@ For example, [Obsidian to Anki](https://github.com/Pseudonium/Obsidian_to_Anki/w
 
 ![2023-12-12 16 36 32](https://github.com/mattcoleanderson/obsidian-conceal-plugin/assets/49250378/e00604c3-21b6-43cf-82cb-a015439253c9)
 
+## Discussions
+
+Overtime I hope we can amass a collection of user created Regex for various use cases.
+
+If you have a Regex you would like to share, I encourage you to leave a comment on 
+the [List of Community Made Regex](https://github.com/mattcoleanderson/obsidian-conceal-plugin/discussions/19) discussion.
+
 ## Support
 
 If you wish to support my work, you can do so with the following links:
