@@ -17,7 +17,6 @@ export class ConcealPostProcessor {
 
 		// Loop through each element
 		elements.forEach((element: HTMLParagraphElement | HTMLLIElement) => {
-			// TODO: Test the REGEX_CURLY_MATCH for post processing here:
 			for (const node of Array.from(element.childNodes)) {
 				// We grab the node so as to not destroy child elements when replacing innerText
 				if (node.instanceOf(Text)) {

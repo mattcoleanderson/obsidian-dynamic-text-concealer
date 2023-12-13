@@ -19,8 +19,18 @@ export class SettingsTab extends PluginSettingTab {
 	}
 
 	addRegexSettings() {
-		this.containerEl.createEl('h2', { text: 'Regex Expressions' });
-		this.containerEl.createEl('p', { text: 'Custom regex allows you to specify patterns to conceal' });
+		let desc = document.createDocumentFragment();
+		desc.append(
+			'Custom Regex for specifying patterns to conceal/replace.',
+			desc.createEl('br'),
+			'Check the ',
+			desc.createEl('a', {
+				href: 'https://github.com/mattcoleanderson/obsidian-conceal-plugin/discussions/19',
+				text: 'List of Community Made Regex',
+			}),
+			' Discussion for working examples. Feel free to add your own as well.',
+		);
+		new Setting(this.containerEl).setHeading().setName('Regular Expressions').setDesc(desc);
 
 		this.plugin.settings.regexp.forEach((regex, index) => {
 			const setting = new Setting(this.containerEl)
@@ -70,7 +80,7 @@ export class SettingsTab extends PluginSettingTab {
 						});
 				});
 			setting.infoEl.remove();
-			setting.controlEl.firstElementChild?.addClass('conceal-regex-setting');
+			setting.controlEl.firstElementChild?.addClass('obsidian-conceal-regex-setting');
 		});
 
 		new Setting(this.containerEl).addButton((button) => {
@@ -89,12 +99,6 @@ export class SettingsTab extends PluginSettingTab {
 		// This is the outtermost HTML element on the setting tab
 		const { containerEl } = this;
 		containerEl.empty();
-
-		containerEl.createEl('h2', { text: 'Obsidian Conceal Plugin - Settings' });
-		containerEl.createEl('a', {
-			text: 'For more information check the wiki',
-			href: 'https://github.com/mattcoleanderson/obsidian-conceal-plugin/wiki',
-		});
 
 		// new Setting(containerEl)
 		// 	.setName('Conceal in Editing Mode')
