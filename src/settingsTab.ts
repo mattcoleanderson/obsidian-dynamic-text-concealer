@@ -90,7 +90,6 @@ export class SettingsTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl('h2', { text: 'Obsidian Conceal Plugin - Settings' });
 		containerEl.createEl('a', {
 			text: 'For more information check the wiki',
 			href: 'https://github.com/mattcoleanderson/obsidian-conceal-plugin/wiki',
