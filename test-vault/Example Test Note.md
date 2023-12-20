@@ -43,9 +43,7 @@ Test that [[links]] aren't {[[removed]]}.
 - Test a single {cloze} note.
 - Test  {2} cloze {notes}.
 - Test a {{single}} double cloze note.
-- Test {{2}} double {{cloze}} notes.
-- {Test} a single cloze note at the beginning and a double cloze note at the {{end}}.
-- {{Test}} a double cloze note at the beginning and a single cloze note at the {end}.
+- Test {{2}} double {{cloze}} notes.ewsingle cloze note at the end.
 - Test `c` note identifiers for {c1:single} and {{c2:double}} brackets along with {{c3::double colon}} and single {c3|pipe} syntaxes.
 - Test multiple digit {{c11223:cloze notes}}.
 - Test that {**bold**}, {*italics*}, and {==highlights==} aren't removed.

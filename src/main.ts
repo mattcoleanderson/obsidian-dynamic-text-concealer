@@ -74,7 +74,7 @@ export default class ConcealPlugin extends Plugin {
 
 	addMarkdownPostProcessor() {
 		this.settings.regexp.forEach((regexString) => {
-			const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+			const regex = new RegExp(regexString, 'gmd'); // create regex expression from user settings
 			const concealPostProcessor = new ConcealPostProcessor(regex);
 			this.registerMarkdownPostProcessor(concealPostProcessor.process);
 		});
