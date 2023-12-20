@@ -12,7 +12,7 @@ export class ConcealPostProcessor {
 		let resultString = '';
 		let prevFinalPos = 0;
 
-		let match: RegExpExecArray;
+		let match;
 		while ((match = this.regexp.exec(element.innerHTML)) !== null) {
 			for (let i = 1; i < match.length; i++) {
 				if (!match.indices) continue;
