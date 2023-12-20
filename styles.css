@@ -9,3 +9,7 @@ If your plugin does not need CSS, delete this file.
 .obsidian-conceal-regex-setting {
 	flex: auto;
 }
+
+.dtc-hide-match {
+	display: none;
+}

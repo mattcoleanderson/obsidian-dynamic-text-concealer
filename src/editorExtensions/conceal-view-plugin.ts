@@ -11,7 +11,6 @@ import {
 } from '@codemirror/view';
 import { editorLivePreviewField } from 'obsidian';
 import { ConcealMatchDecorator } from './conceal-match-decorator';
-import { MatchWidget } from './match-widget';
 import { syntaxTree } from '@codemirror/language';
 
 class ConcealViewPlugin implements PluginValue {
@@ -26,15 +25,15 @@ class ConcealViewPlugin implements PluginValue {
 				if (this.isCodeblock(view, from, to)) return;
 				if (this.selectionAndRangeOverlap(view.state.selection, from, to)) return;
 
-				// Add decorator to replace match with the 'answer' capture group
-				add(
-					from,
-					from + match[0].length,
-					Decoration.replace({
-						widget: new MatchWidget(match, view),
-						inclusive: true,
-					}),
-				);
+				// Add mark decorator for each capture group in regex
+				for (let i = 1; i < match.length; i++) {
+					if (!match.indices) continue;
+
+					// Call function to add decorator to DecorationSet for each capture group
+					const startPos = from + (match.indices[i][0] - match.index);
+					const finalPos = from + (match.indices[i][1] - match.index);
+					add(startPos, finalPos, Decoration.mark({ class: 'dtc-hide-match' }));
+				}
 			},
 		});
 

@@ -1,12 +1,11 @@
 
 ## Clozure Syntaxes
 
-The following are different clozure syntaxes. This list was copied from https://github.com/Pseudonium/Obsidian_to_Anki/wiki/Cloze-formatting
+The following is a test based on the default regex for concealing. This regex is meant to conceal anki clozure syntax introduced by Obsidian_to_Anki.
 
+https://github.com/Pseudonium/Obsidian_to_Anki/wiki/Cloze-formatting
 
 ## Paragraph Style Tests
-
-((test]]
 
 Test a single {cloze}  note. 
 
@@ -24,9 +23,9 @@ Test `c` note identifiers for {c1:single} and {{c2:double}} brackets along with 
 
 Test multiple digit {{c11223:cloze notes}}.
 
-Test that **bold**, *italics*, and ==highlights== aren't {{c1:removed}}.
+Test that {**bold**}, {*italics*}, and {==highlights==} aren't removed.
 
-Test that [[links]] aren't {removed}.
+Test that [[links]] aren't {[[removed]]}.
 
 ## List Style
 
@@ -38,8 +37,8 @@ Test that [[links]] aren't {removed}.
 6. {{Test}} a double cloze note at the beginning and a single cloze note at the {end}.
 7. Test `c` note identifiers for {c1:single} and {{c2:double}} brackets along with {{c3::double colon}} and single {c3|pipe} syntaxes.
 8. Test multiple digit {{c11223:cloze notes}}.
-9. Test that **bold**, *italics*, and ==highlights== aren't {{c1:removed}}.
-10. Test that [[links]] aren't {removed}.
+9. Test that {**bold**}, {*italics*}, and {==highlights==} aren't removed.
+10. Test that [[links]] aren't {[[removed]]}.
 
 - Test a single {cloze} note.
 - Test  {2} cloze {notes}.
@@ -49,8 +48,8 @@ Test that [[links]] aren't {removed}.
 - {{Test}} a double cloze note at the beginning and a single cloze note at the {end}.
 - Test `c` note identifiers for {c1:single} and {{c2:double}} brackets along with {{c3::double colon}} and single {c3|pipe} syntaxes.
 - Test multiple digit {{c11223:cloze notes}}.
-- Test that **bold**, *italics*, and ==highlights== aren't {{c1:removed}}.
-- Test that [[links]] aren't {removed}.
+- Test that {**bold**}, {*italics*}, and {==highlights==} aren't removed.
+- Test that [[links]] aren't {[[removed]]}.
 
 ## Test Code Block
 
@@ -60,76 +59,3 @@ export function foo(bar: Bar) {
 }
 ```
 
-
-### Curly Brace Style (OG)
-
-1. This is a {cloze} note with {two clozes} -> This is a {{c1::cloze}} note with {{c2::two clozes}}
-2. This is a {2:cloze} note with {1:id syntax} -> This is a {{c2::cloze}} note with {{c1::id syntax}}
-3. This is a {2|cloze} {3|note} **with** {1|alternate id syntax} -> This is a {{c2::cloze}} {{c3::note}} with {{c1::alternate id syntax}}
-4. This is a {c1:cloze} note with {c2:another} type of {c3:id syntax} -> This is a {{c1::cloze}} note with {{c2::another}} type of {{c3::id syntax}}
-5. This is a {c1|cloze} note with {c2|yet another} type of {c3|id syntax} -> This is a {{c1::cloze}} note with {{c2::yet another}} type of {{c3::id syntax}}
-
-
-### Highlight Style
-
-1. This is a ==cloze== note with ==two clozes== -> This is a ==c1::cloze== note with ==c2::two clozes==
-2. This is a ==2:cloze== note with ==1:id syntax== -> This is a ==c2::cloze== note with ==c1::id syntax==
-3. This is a ==2|cloze== ==3|note== with ==1|alternate id syntax== -> This is a ==c2::cloze== ==c3::note== with ==c1::alternate id syntax==
-4. This is a ==c1:cloze== note with ==c2:another== type of ==c3:id syntax== -> This is a ==c1::cloze== note with ==c2::another== type of ==c3::id syntax==
-5. This is a ==c1|cloze== note with ==c2|yet another== type of ==c3|id syntax== -> This is a ==c1::cloze== note with ==c2::yet another== type of ==c3::id syntax==
-
-
-## Mixing Styles
-
-### Curly Brace Style
-
-1. This is a {cloze} note with {multiple} non-id clozes, as well as {2:some clozes} with {c1|other styles}
-2. This is a {{c1::cloze}} note with {{c2::multiple}} non-id clozes, as well as {{c2::some clozes}} with {{c1::other styles}}
-
-### Highlight Style
-
-1. This is a ==cloze== note with ==multiple== non-id clozes, as well as ==2:some clozes== with ==c1|other styles==
-2. This is a ==c1::cloze== note with ==c2::multiple== non-id clozes, as well as ==c2::some clozes== with ==c1::other styles==
-
-
-## Lets also test outside of a list
-
-### Curly Brace Style (OG)
-
-This is a {cloze} note with {two clozes} -> This is a {{c1::cloze}} note with {{c2::two clozes}}
-
-This is a {2:cloze} note with {1:id syntax} -> This is a {{c2::cloze}} note with {{c1::id syntax}}
-
-This is a {2|cloze} {3|note} with {1|alternate id syntax} -> This is a {{c2::cloze}} {{c3::note}} with {{c1::alternate id syntax}}
-
-This is a {c1:cloze} note with {c2:another} type of {c3:id syntax} -> This is a {{c1::cloze}} note with {{c2::another}} type of {{c3::id syntax}}
-
-This is a {c1|cloze} note with {c2|yet another} type of {c3|id syntax} -> This is a {{c1::cloze}} note with {{c2::yet another}} type of {{c3::id syntax}}
-
-
-### Highlight Style
-
-This is a ==cloze== note with ==two clozes== -> This is a ==c1::cloze== note with ==c2::two clozes==
-
-This is a ==2:cloze== note with ==1:id syntax== -> This is a ==c2::cloze== note with ==c1::id syntax==
-
-This is a ==2|cloze== ==3|note== with ==1|alternate id syntax== -> This is a ==c2::cloze== ==c3::note== with ==c1::alternate id syntax==
-
-This is a ==c1:cloze== note with ==c2:another== type of ==c3:id syntax== -> This is a ==c1::cloze== note with ==c2::another== type of ==c3::id syntax==
-
-This is a ==c1|cloze== note with ==c2|yet another== type of ==c3|id syntax== -> This is a ==c1::cloze== note with ==c2::yet another== type of ==c3::id syntax==
-
-
-## Mixing Styles
-
-### Curly Brace Style
-
-This is a {cloze} note with {multiple} non-id clozes, as well as {2:some clozes} with {c1|other styles}
-
-This is a {{c1::cloze}} note with {{c2::multiple}} non-id clozes, as well as {{c2::some clozes}} with {{c1::other styles}}
-
-### Highlight Style
-
-This is a ==cloze== note with ==multiple== non-id clozes, as well as ==2:some clozes== with ==c1|other styles==
-
-This is a ==c1::cloze== note with ==c2::multiple== non-id clozes, as well as ==c2::some clozes== with ==c1::other styles==
