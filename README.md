@@ -12,7 +12,10 @@ For example, [Obsidian to Anki](https://github.com/Pseudonium/Obsidian_to_Anki/w
 
 ### Regex used in example
 
-![image](https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/assets/49250378/b97faaf7-ed7d-4ab7-b4a8-cfb9d0bfbb39)
+When writing custom regex, the capture groups will be concealed in your notes.
+
+<img width="779" alt="image" src="https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/assets/49250378/451db886-93e5-4692-b31e-f09e4d65b484">
+
 
 ### Example conceal in Source, Edit, and Read mode
 
