@@ -6,6 +6,10 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
-.obsidian-conceal-regex-setting {
+.dtc-setting {
 	flex: auto;
+}
+
+.dtc-hide-match {
+	display: none;
 }

@@ -9,7 +9,7 @@ import { PluginSettings } from './interfaces/plugin-settings';
 // Settings
 const DEFAULT_SETTINGS: PluginSettings = {
 	doConcealEditMode: true,
-	regexp: ['{{1,2}(?![\\s{])(?:c?\\d+(?::{1,2}|\\|))?(?<answer>[^}]+)}{1,2}'],
+	regexp: ['({{1,2}(?![\\s{])(?:c?\\d+(?::{1,2}|\\|))?)(?:[^}]+)(}{1,2})'],
 	enable: true,
 };
 
@@ -74,7 +74,7 @@ export default class ConcealPlugin extends Plugin {
 
 	addMarkdownPostProcessor() {
 		this.settings.regexp.forEach((regexString) => {
-			const regex = new RegExp(regexString, 'gm'); // create regex expression from user settings
+			const regex = new RegExp(regexString, 'gmd'); // create regex expression from user settings
 			const concealPostProcessor = new ConcealPostProcessor(regex);
 			this.registerMarkdownPostProcessor(concealPostProcessor.process);
 		});

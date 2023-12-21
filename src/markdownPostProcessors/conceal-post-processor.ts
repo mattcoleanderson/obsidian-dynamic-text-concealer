@@ -6,8 +6,29 @@ export class ConcealPostProcessor {
 
 	constructor(public regexp: RegExp) {}
 
-	private conceal = (node: Text, regex: RegExp, replacement: string) => {
-		node.textContent = (node.textContent || '').replace(regex, replacement);
+	private conceal = (element: HTMLParagraphElement | HTMLLIElement) => {
+		// InnterHTML is the only way to preserve element tags during the regex matches.
+		// However, since the replaced text is a capture group, only text in the document itself can cause a replacement
+		let resultString = '';
+		let prevFinalPos = 0;
+
+		let match;
+		while ((match = this.regexp.exec(element.innerHTML)) !== null) {
+			for (let i = 1; i < match.length; i++) {
+				if (!match.indices) continue;
+
+				const replacement = `<span class="dtc-hide-match">${match[i]}</span>`;
+				const startPos = match.indices[i][0];
+				const finalPos = match.indices[i][1];
+
+				resultString += element.innerHTML.substring(prevFinalPos, startPos).concat(replacement);
+				prevFinalPos = finalPos;
+			}
+		}
+
+		if (resultString.length > 0) {
+			element.innerHTML = resultString;
+		}
 	};
 
 	// markdownPostProcessor manipulates the DOM of
@@ -17,15 +38,7 @@ export class ConcealPostProcessor {
 
 		// Loop through each element
 		elements.forEach((element: HTMLParagraphElement | HTMLLIElement) => {
-			for (const node of Array.from(element.childNodes)) {
-				// We grab the node so as to not destroy child elements when replacing innerText
-				if (node.instanceOf(Text)) {
-					const content = (node.textContent || '').trim();
-					if (!content) continue;
-
-					this.conceal(node, this.regexp, this.REGEX_CURLY_REPLACEMENT);
-				}
-			}
+			this.conceal(element);
 		});
 	};
 }
