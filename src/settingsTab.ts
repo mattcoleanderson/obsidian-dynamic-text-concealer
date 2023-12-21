@@ -80,7 +80,7 @@ export class SettingsTab extends PluginSettingTab {
 						});
 				});
 			setting.infoEl.remove();
-			setting.controlEl.firstElementChild?.addClass('obsidian-conceal-regex-setting');
+			setting.controlEl.firstElementChild?.addClass('dtc-setting');
 		});
 
 		new Setting(this.containerEl).addButton((button) => {
