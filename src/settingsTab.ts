@@ -1,10 +1,10 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
-import ConcealPlugin from './main';
+import DynamicTextConcealPlugin from './main';
 
 export class SettingsTab extends PluginSettingTab {
-	plugin: ConcealPlugin;
+	plugin: DynamicTextConcealPlugin;
 
-	constructor(app: App, plugin: ConcealPlugin) {
+	constructor(app: App, plugin: DynamicTextConcealPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

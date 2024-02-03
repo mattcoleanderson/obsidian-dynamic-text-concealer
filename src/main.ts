@@ -13,7 +13,7 @@ const DEFAULT_SETTINGS: PluginSettings = {
 	enable: true,
 };
 
-export default class ConcealPlugin extends Plugin {
+export default class DynamicTextConcealPlugin extends Plugin {
 	settings: PluginSettings;
 	editorExtensions: Extension[] = [];
 
