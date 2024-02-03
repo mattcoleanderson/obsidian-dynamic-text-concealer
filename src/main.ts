@@ -1,4 +1,4 @@
-import { App, MarkdownView, Modal, Plugin } from 'obsidian';
+import { MarkdownView, Plugin } from 'obsidian';
 import { SettingsTab } from './settingsTab';
 import { EditorView } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
