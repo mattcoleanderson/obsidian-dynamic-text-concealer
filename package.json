@@ -1,6 +1,6 @@
 {
 	"name": "dynamic-text-concealer",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Conceal or replace user configured text patterns in Live Preview and Read Mode.",
 	"main": "main.js",
 	"type": "commonjs",

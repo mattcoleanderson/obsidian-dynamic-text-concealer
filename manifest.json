@@ -1,7 +1,7 @@
 {
 	"id": "dynamic-text-concealer",
 	"name": "Dynamic Text Concealer",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"minAppVersion": "0.15.0",
 	"description": "Conceal or replace user configured text patterns in Live Preview and Read Mode.",
 	"author": "Matt Cole Anderson",
