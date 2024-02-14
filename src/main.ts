@@ -95,6 +95,8 @@ export default class DynamicTextConcealPlugin extends Plugin {
 
 	// Releases any resources configured by the plugin
 	onunload() {
-		console.log('Unloading Obsidian ure Conceal Plugin');
+		console.log('Saving settings for Obsidian Clozure Conceal Plugin...');
+		this.saveSettings();
+		console.log('Unloading Obsidian Clozure Conceal Plugin...');
 	}
 }

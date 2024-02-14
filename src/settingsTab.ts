@@ -26,7 +26,7 @@ export class SettingsTab extends PluginSettingTab {
 			'Check the ',
 			desc.createEl('a', {
 				href: 'https://github.com/mattcoleanderson/obsidian-dynamic-text-concealer/discussions/19',
-				text: 'List of Community Made Regex',
+				text: 'List of community made regex',
 			}),
 			' Discussion for working examples. Feel free to add your own as well.',
 		);
