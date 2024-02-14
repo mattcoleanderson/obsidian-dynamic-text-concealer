@@ -82,7 +82,7 @@ export default class DynamicTextConcealPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		console.log('Loading Obsidian Conceal Plugin');
+		console.log('Loading Dynamic Text Conceal Plugin');
 
 		this.addMarkdownPostProcessor();
 
@@ -95,8 +95,6 @@ export default class DynamicTextConcealPlugin extends Plugin {
 
 	// Releases any resources configured by the plugin
 	onunload() {
-		console.log('Saving settings for Obsidian Clozure Conceal Plugin...');
-		this.saveSettings();
-		console.log('Unloading Obsidian Clozure Conceal Plugin...');
+		console.log('Unloading Dynamic Text Conceal Plugin...');
 	}
 }
